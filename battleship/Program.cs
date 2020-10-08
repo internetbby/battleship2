@@ -12,36 +12,34 @@ namespace battleship
             System.Console.WriteLine("input player 1 name");
             string player1 = Console.ReadLine(); // skriver in namn
 
-            string[] player2name = {"Adam", "Bob", "Lizzie"};
+            string[] player2name = {"Adam", "Bob", "Lizzie", "Sadie"};
 
             string player2 =player2name[random]; //väljer random name från arrayen 
 
-            int playerHealth1 = 50;
-            int playerHealth2 = 50;  //start health
+            int playerHealth1 = 100;
+            int playerHealth2 = 100;  //start health
 
             Console.Clear();
             
 
-            while (playerHealth1 > 0 && playerHealth2 > 0){
-                random = generator.Next(1,10);
-                playerHealth1 = playerHealth1 - random; 
-                System.Console.WriteLine( player1 +  " health was decreased by " + random);
-                    if (playerHealth1 <  0){
-                        playerHealth1 = 0;
-                    }
-                System.Console.WriteLine(playerHealth1);
-                Console.ReadLine(); // första rundan för player 1
+            while (playerHealth1 > 0 &&  playerHealth2 > 0){
+
+                //player turn
+
+                playerHealth2 = PlayerModifier(playerHealth2, player2);
+                
+                System.Console.WriteLine(player2 + " health is " + playerHealth2);
+                Console.ReadLine();
                 Console.Clear();
 
-                random = generator.Next(1,10);
-                playerHealth2 = playerHealth2 - random;
-                System.Console.WriteLine(player2 +" health was decreased by " + random);
-                if (playerHealth2 <  0){
-                        playerHealth2 = 0;
-                    }
 
-                System.Console.WriteLine(playerHealth2);
-                Console.ReadLine(); // player 2 rundan
+                //computer turn 
+
+
+                playerHealth2 = PlayerModifier(playerHealth1, player1);
+
+                System.Console.WriteLine(player1 + " health is " + playerHealth1);
+                Console.ReadLine(); 
                 Console.Clear();
 
 
@@ -58,6 +56,25 @@ namespace battleship
             }
 
             Console.ReadLine();
+        }
+
+        static int PlayerModifier(int playerHealth, string name){
+            Random generator = new Random(); 
+            int random = generator.Next (1,100);
+
+                if (random > 25){
+                    random = generator.Next(1,25);
+                    playerHealth = playerHealth - random; 
+                    System.Console.WriteLine( name+  " health was decreased by " + random);
+                    if (playerHealth <  0){
+                        playerHealth = 0;
+                    }
+                }
+                else{
+                    System.Console.WriteLine("miss!");
+                }
+
+                return playerHealth;
         }
     }
 }
